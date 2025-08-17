@@ -8,29 +8,41 @@ import IndiaMapSidebar from "./OnPage/sidebar";
 
 
 
-export default function CountryMap() {
-  const { code } = useParams();
+export default function Detail() {
+  const { ccode,item } = useParams();
   const navigate = useNavigate();
   const { BaseLayer } = LayersControl;
   const [statesData, setStatesData] = useState(null);
   const [countryStates, setCountryStates] = useState(null);
   const [countryCenter, setCountryCenter] = useState([20, 0]);
+  const [peaks,setpeaks]=useState(null);
+  const [showPeaks,setshowPeaks]=useState(false);
 
 
-
-
-  useEffect(() => {
+   useEffect(() => {
     fetch("/data/states50m.geojson")
       .then((res) => res.json())
       .then((data) => setStatesData(data));
   }, []);
+
+  useEffect(() => {
+    fetch("/data/india_peaks.geojson")
+      .then((res) => res.json())
+      .then((data) => setpeaks(data));
+  }, []);
+
+  useEffect(()=>{
+  if(item === "Mountain Peaks in India"){
+    setshowPeaks(true);
+  }
+  },[item])
 
   // Filter states for this country once statesData is loaded
   useEffect(() => {
     if (!statesData) return;
     const filtered = {
       type: "FeatureCollection",
-      features: statesData.features.filter((f) => f.properties.adm0_a3 === code),
+      features: statesData.features.filter((f) => f.properties.adm0_a3 === ccode),
 
     };
     setCountryStates(filtered);
@@ -44,7 +56,7 @@ export default function CountryMap() {
       const [lon, lat] = centerFeature.geometry.coordinates;
       setCountryCenter([lat, lon]);
     }
-  }, [statesData, code]);
+  }, [statesData, ccode]);
 
   const onEachState = (feature, layer) => {
     layer.on("click", () => {
@@ -60,7 +72,7 @@ export default function CountryMap() {
 
 
   return (<>
-    <IndiaMapSidebar ccode={code} />
+    <IndiaMapSidebar ccode={ccode} />
 
     <MapContainer
       center={countryCenter}
@@ -73,7 +85,7 @@ export default function CountryMap() {
     >
       <LayersControl position="topright">
         {/* OpenStreetMap */}
-        <BaseLayer checked name="OpenStreetMap">
+        <BaseLayer  name="OpenStreetMap">
           <TileLayer
             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
             attribution="© OpenStreetMap contributors © CARTO"
@@ -83,7 +95,7 @@ export default function CountryMap() {
         </BaseLayer>
 
         {/* OpenTopoMap - Terrain Relief */}
-        <BaseLayer name="Terrain (OpenTopoMap)">
+        <BaseLayer checked name="Terrain (OpenTopoMap)">
           <TileLayer
             url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png"
             attribution='Map data © <a href="https://opentopomap.org">OpenTopoMap</a>, <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -98,8 +110,28 @@ export default function CountryMap() {
           />
         </BaseLayer>
       </LayersControl>
-
+       
       {/* States Layer */}
+       {showPeaks &&
+              <GeoJSON
+                data={peaks}
+                pointToLayer={(feature, latlng) =>
+                  L.marker(latlng, {
+                    icon: L.divIcon({
+  className: "peak-icon",
+  html: "⛰️",
+  iconSize: [30, 30],          // keep reasonable size
+  iconAnchor: [15, 15],        // half of width & height → centers it
+})
+
+                  }).bindPopup(
+                    `<b>${feature.properties.name}</b><br/>
+                     Height: ${feature.properties.height}<br/>
+                     Range: ${feature.properties.range}`
+                  )
+                }
+              />
+              }
       {countryStates && (
         <>
           <GeoJSON

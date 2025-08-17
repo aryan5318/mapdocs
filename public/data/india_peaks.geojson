@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [76.5133, 35.8818] },
+      "properties": { "name": "K2 (Godwin Austen)", "height": "8611 m", "range": "Karakoram (PoK)" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [88.1475, 27.7025] },
+      "properties": { "name": "Kanchenjunga", "height": "8598 m", "range": "Sikkim Himalaya" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [79.9728, 30.3753] },
+      "properties": { "name": "Nanda Devi", "height": "7816 m", "range": "Garhwal Himalaya, Uttarakhand" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [79.6000, 30.9200] },
+      "properties": { "name": "Kamet", "height": "7756 m", "range": "Garhwal Himalaya, Uttarakhand" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [77.5500, 35.4000] },
+      "properties": { "name": "Saltoro Kangri", "height": "7742 m", "range": "Karakoram" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [77.0000, 34.2500] },
+      "properties": { "name": "Saser Kangri", "height": "7672 m", "range": "Eastern Karakoram, Ladakh" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [79.4300, 30.3000] },
+      "properties": { "name": "Trisul", "height": "7120 m", "range": "Kumaon Himalaya, Uttarakhand" }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [96.5869, 29.6167] },
+      "properties": { "name": "Namcha Barwa", "height": "7782 m", "range": "Eastern Himalaya, near Arunachal" }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, } from "react";
+import { useNavigate } from "react-router-dom";
 
 const indiaSidebarData = [
   {
@@ -144,10 +144,11 @@ const indiaSidebarData = [
   },
 ];
 
-export default function IndiaMapSidebar() {
+export default function IndiaMapSidebar({ccode}) {
+  const navigate=useNavigate();
 
   const [openCategory, setOpenCategory] = useState(null);
-  
+  console.log(ccode);
   const toggleCategory = (index) => {
     setOpenCategory(openCategory === index ? null : index);
   };
@@ -169,7 +170,7 @@ export default function IndiaMapSidebar() {
                 <li
                   key={i}
                   className="cursor-pointer hover:text-blue-600"
-                  onClick={() => alert(`You clicked: ${item}`)}
+                  onClick={() => navigate(`/${ccode}/${item}`)}
                 >
                   {item}
                 </li>

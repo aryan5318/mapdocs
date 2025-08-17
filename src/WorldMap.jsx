@@ -48,7 +48,12 @@ useEffect(() => {
       zoom={3}
       style={{ height: "100vh", width: "100vw" }}
     >
-       <TileLayer url="https://tile.openstreetmap.de/{z}/{x}/{y}.png" />
+    <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
+        attribution="© OpenStreetMap contributors © CARTO"
+        subdomains={["a", "b", "c", "d"]}
+        maxZoom={19}
+      />
 
       {countries && (
         <GeoJSON
